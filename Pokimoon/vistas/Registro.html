@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    <style>
+        .contenedor-centrado {
+            text-align: center;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor-centrado">
+        <h1>Registro de Usuario</h1>
+        <form id="registroForm">
+            <label for="nombre">Nombre:</label><br>
+            <input type="text" id="nombre" name="nombre"><br><br>
+
+            <label for="apellido">Apellido:</label><br>
+            <input type="text" id="apellido" name="apellido"><br><br>
+
+            <label for="email">Correo Electrónico:</label><br>
+            <input type="email" id="email" name="email"><br><br>
+
+            <label for="usuario">Nombre de Usuario:</label><br>
+            <input type="text" id="usuario" name="usuario"><br><br>
+
+            <label for="contrasena">Contraseña:</label><br>
+            <input type="password" id="contrasena" name="contrasena"><br><br>
+
+            <label for="confirmarContrasena">Confirmar Contraseña:</label><br>
+            <input type="password" id="confirmarContrasena" name="confirmarContrasena"><br><br>
+
+            <button type="button" onclick="registrarUsuario()">Registrarse</button>
+        </form>
+        <p id="mensajeError" class="error"></p>
+    </div>
+
+    <script>
+        function registrarUsuario() {
+            const nombre = document.getElementById("nombre").value;
+            const apellido = document.getElementById("apellido").value;
+            const email = document.getElementById("email").value;
+            const usuario = document.getElementById("usuario").value;
+            const contrasena = document.getElementById("contrasena").value;
+            const confirmarContrasena = document.getElementById("confirmarContrasena").value;
+            const mensajeError = document.getElementById("mensajeError");
+
+            mensajeError.textContent = "";
+
+            if (contrasena !== confirmarContrasena) {
+                mensajeError.textContent = "Las contraseñas no coinciden.";
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                mensajeError.textContent = "Correo electrónico inválido.";
+                return;
+            }
+
+            const usuarioDisponible = verificarUsuarioDisponible(usuario);
+
+            if (usuarioDisponible) {
+                console.log("Nombre:", nombre);
+                console.log("Apellido:", apellido);
+                console.log("Correo Electrónico:", email);
+                console.log("Nombre de Usuario:", usuario);
+                console.log("Contraseña:", contrasena);
+                console.log("Confirmar Contraseña:", confirmarContrasena);
+
+                alert('Registro Exitoso Para: ' + usuario);
+            } else {
+                alert('El usuario "' + usuario + '" no está disponible. Por favor, elige otro.');
+            }
+        }
+
+        function verificarUsuarioDisponible(usuario) {
+            const usuariosNoDisponibles = ["usuario1", "usuario2", "usuario3"];
+            return !usuariosNoDisponibles.includes(usuario);
+        }
+    </script>
+</body>
+</html>
